@@ -1,8 +1,8 @@
 // Require the framework and instantiate it
-const fastify = require("fastify")({ logger: true });
+const fastify = require("fastify")({ logger: true, ignoreTrailingSlash: true });
 
 // Declare a route
-fastify.get("/*", { prefix: "/api" }, async (request, reply) => {
+fastify.get("/", { prefix: "/api" }, async (request, reply) => {
   let endpoints = [
     {
       topShows: "/api/shows/top?page={pagenum}",
@@ -20,6 +20,10 @@ fastify.get("/*", { prefix: "/api" }, async (request, reply) => {
   ];
   return { info: "Welcome to Mydramalist.com API", endpoints: endpoints };
 });
+
+fastify.get("/*", async (request, reply) => {
+    return { error: 'Undefined Endpoint' }
+})
 
 // Import Routes
 const scrape = require("./scrape");

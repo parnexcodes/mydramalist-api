@@ -1,4 +1,4 @@
-# mydramalist-api
+# mydramalist API
 🔥 Blazing Fast API which scrapes Mydramalist.com made using Fastify and Cheerio. 
 
 ## Setup
@@ -7,22 +7,28 @@
 
 ```node index.js```
 
-## API Endpoints
+available at `http://localhost:5001/`
+## API Reference
 
+```http
+  GET /api/${type}/${filter}?page=${pagenum}
 ```
-topShows: "/api/shows/top?page={pagenum}",
-popularShows: "/api/shows/popular?page={pagenum}",
-newestShows: "/api/shows/newest?page={pagenum}",
-upcomingShows: "/api/shows/upcoming?page={pagenum}",
-varietyShows: "/api/shows/variety?page={pagenum}",
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `type`      | `string` | **Required**, can be `shows` or `movies` |
+| `filter`      | `string` | **Required**, can be `top`, `popular`, `newest`, `upcoming`, `variety` |
+| `pagenum`      | `string` | **Optional**, eg: `2`|
 
 
-topMovies: "/api/movies/top?page={pagenum}",
-popularMovies: "/api/movies/popular?page={pagenum}",
-newestMovies: "/api/movies/newest?page={pagenum}",
-upcomingMovies: "/api/movies/upcoming?page={pagenum}",
-```
+
 
 ## Made with
 
-**NodeJS , Fastify and Cheerio**
+NodeJS , Fastify and Cheerio
+
+
+## Authors
+
+- [@parnexcodes](https://github.com/parnexcodes)
+
