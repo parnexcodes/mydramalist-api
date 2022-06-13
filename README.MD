@@ -10,7 +10,7 @@
 available at `http://localhost:5001/`
 ## API Reference
 
-``
+```
   GET /api/${type}/${filter}?page=${pagenum}
 ```
 
