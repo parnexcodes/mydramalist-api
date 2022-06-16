@@ -1,10 +1,5 @@
 // Require the framework and instantiate it
-import Fastify from 'fastify'
-
-const fastify = Fastify({
-  logger: true,
-  ignoreTrailingSlash: true
-})
+const fastify = require("fastify")({ logger: true, ignoreTrailingSlash: true });
 
 // Declare a route
 fastify.get("/", { prefix: "/api" }, async (request, reply) => {

@@ -1,12 +1,12 @@
 // Declare a route
-import * as cheerio from 'cheerio';
-import fetch from "node-fetch";
+const cheerio = require('cheerio')
+const axios = require('axios')
 
 const scrapeDetails = async (fastify, options) => {
     fastify.get('/details/:id', async (request, reply) => {
         let { id } = request.params
-        const res = await fetch(`https://mydramalist.com/${id}`)
-        const html = await res.text()
+        const res = await axios.get(`https://mydramalist.com/${id}`, Headers={'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'})
+        const html = await res.data
         const $ = cheerio.load(html)
 
         let alternateTitle = []

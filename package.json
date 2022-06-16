@@ -1,8 +1,7 @@
 {
-	"type": "module",
 	"dependencies": {
+		"axios": "^0.27.2",
 		"cheerio": "1.0.0-rc.11",
-		"fastify": "^4.0.2",
-		"node-fetch": "^3.2.6"
+		"fastify": "^4.0.2"
 	}
 }

@@ -1,6 +1,6 @@
 // Declare a route
-import * as cheerio from 'cheerio';
-import fetch from "node-fetch";
+const cheerio = require('cheerio')
+const axios = require('axios')
 
 const scrape = async (fastify, options) => {
     fastify.get('/:type/:filter', async (request, reply) => {
@@ -9,11 +9,11 @@ const scrape = async (fastify, options) => {
         if (!page) {
             page = 1
         }
-        const res = await fetch(`https://mydramalist.com/${type}/${filter}?page=${page}`, Headers={'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'})
-        const html = await res.text()
+        const res = await axios.get(`https://mydramalist.com/${type}/${filter}?page=${page}`, Headers={'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.84 Safari/537.36'})
+        const html = await res.data
         let data = []
         const $ = cheerio.load(html)
-        $('div.m-t.nav-active-border.b-primary').find('div.box').each((index, element) => {z
+        $('div.m-t.nav-active-border.b-primary').find('div.box').each((index, element) => {
             let title = $(element).find('h6.text-primary.title').find('a').text()
             let slug = $(element).find('h6.text-primary.title').find('a').attr('href').replace('/', '')
             // let poster = $(element).find('a.block > img').attr('src') //doesn't work because of lazy load
