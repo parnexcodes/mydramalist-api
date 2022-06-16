@@ -37,12 +37,10 @@ fastify.register(scrape, { prefix: "/api" });
 fastify.register(scrapeDetails, { prefix: "/api" });
 
 // Run the server!
-const start = async () => {
-  try {
-    await fastify.listen(process.env.PORT || 8080, "0.0.0.0");
-  } catch (err) {
-    fastify.log.error(err);
+fastify.listen(process.env.PORT || 8080, "0.0.0.0", (err, address) => {
+  if (err) {
+    console.error(err);
     process.exit(1);
   }
-};
-start();
+  console.log(`Server listening at ${address}`);
+});
