@@ -39,7 +39,7 @@ fastify.register(scrapeDetails, { prefix: "/api" });
 // Run the server!
 const start = async () => {
   try {
-    await fastify.listen(process.env.PORT || 5001, "0.0.0.0");
+    await fastify.listen(process.env.PORT || 8080, "0.0.0.0");
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
