@@ -17,6 +17,9 @@ fastify.get("/", { prefix: "/api" }, async (request, reply) => {
       newestMovies: "/api/movies/newest?page={pagenum}",
       upcomingMovies: "/api/movies/upcoming?page={pagenum}",
     },
+    {
+      details: "/api/details/{mydramalist_slug}",
+    },
   ];
   return { info: "Welcome to Mydramalist.com API", endpoints: endpoints };
 });
@@ -27,9 +30,11 @@ fastify.get("/*", async (request, reply) => {
 
 // Import Routes
 const scrape = require("./scrape");
+const scrapeDetails = require('./scrapeDetails');
 
 // Register Routes
 fastify.register(scrape, { prefix: "/api" });
+fastify.register(scrapeDetails, { prefix: "/api" });
 
 // Run the server!
 const start = async () => {

@@ -12,7 +12,7 @@ const scrape = async (fastify, options) => {
         const html = await res.text()
         let data = []
         const $ = cheerio.load(html)
-        $('div.m-t.nav-active-border.b-primary').find('div.box').each((index, element) => {
+        $('div.m-t.nav-active-border.b-primary').find('div.box').each((index, element) => {z
             let title = $(element).find('h6.text-primary.title').find('a').text()
             let slug = $(element).find('h6.text-primary.title').find('a').attr('href').replace('/', '')
             // let poster = $(element).find('a.block > img').attr('src') //doesn't work because of lazy load
