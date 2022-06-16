@@ -1,6 +1,6 @@
 // Declare a route
 const cheerio = require('cheerio')
-import fetch from "node-fetch";
+const fetch = require('node-fetch')
 
 const scrape = async (fastify, options) => {
     fastify.get('/:type/:filter', async (request, reply) => {
