@@ -15,7 +15,7 @@ const scrapeDetails = async (fastify, options) => {
 
         let title = $('h1.film-title').text()
         let nativeTitle = $('ul.list.m-a-0').find('[class="list-item p-a-0"]').eq(0).find('a').text()
-        let synopsis = $('div.show-synopsis').text().trim().split('(Source:')[0].trim()
+        let synopsis = $('div.show-synopsis').text().split('(Source:')[0].trim()
         if (synopsis.includes('Edit Translation')) {
             synopsis = "N/A"
         }

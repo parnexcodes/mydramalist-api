@@ -20,7 +20,7 @@ const scrape = async (fastify, options) => {
             let ranking = $(element).find('div.ranking.pull-right').text().replace('#', '')
             let rlsYear = $(element).find('span.text-muted').text().split('-')[1].trim().split(',')[0]
             let rating = $(element).find('p').eq(0).text().trim()
-            let shortDescription = $(element).find('p').eq(1).text().trim()
+            let shortDescription = $(element).find('p').eq(1).text().split('(Source:')[0].trim()
             if (type != 'movies') {
                 var language = $(element).find('span.text-muted').text().split('Drama')[0].trim()
                 var totalEp = $(element).find('span.text-muted').text().split(',')[1].replace('episodes', '').trim()
