@@ -18,21 +18,21 @@ const scrape = async (fastify, options) => {
             let slug = $(element).find('h6.text-primary.title').find('a').attr('href').replace('/', '')
             // let poster = $(element).find('a.block > img').attr('src') //doesn't work because of lazy load
             let ranking = $(element).find('div.ranking.pull-right').text().replace('#', '')
-            let rlsYear = $(element).find('span.text-muted').text().split('-')[1].trim().split(',')[0]
+            let release_year = $(element).find('span.text-muted').text().split('-')[1].trim().split(',')[0]
             let rating = $(element).find('p').eq(0).text().trim()
-            let shortDescription = $(element).find('p').eq(1).text().split('(Source:')[0].trim()
+            let short_description = $(element).find('p').eq(1).text().split('(Source:')[0].trim()
             if (type != 'movies') {
                 var language = $(element).find('span.text-muted').text().split('Drama')[0].trim()
-                var totalEp = $(element).find('span.text-muted').text().split(',')[1].replace('episodes', '').trim()
+                var total_ep = $(element).find('span.text-muted').text().split(',')[1].replace('episodes', '').trim()
                 data.push({
                     ranking,
                     title,
                     slug,
-                    rlsYear,
+                    release_year,
                     rating,
                     language,
-                    totalEp,
-                    shortDescription
+                    total_ep,
+                    short_description
                 })
             } else {
                 var language = $(element).find('span.text-muted').text().split('Movie')[0].trim()
@@ -40,10 +40,10 @@ const scrape = async (fastify, options) => {
                     ranking,
                     title,
                     slug,
-                    rlsYear,
+                    release_year,
                     rating,
                     language,
-                    shortDescription
+                    short_description
                 })
             }
         })
