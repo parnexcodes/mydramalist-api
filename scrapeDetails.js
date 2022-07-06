@@ -12,6 +12,7 @@ const scrapeDetails = async (fastify, options) => {
         let alternate_title = []
         let genres = []
         let tags = []
+        let cast = []
 
         let title = $('h1.film-title').text()
         let native_title = $('ul.list.m-a-0').find('[class="list-item p-a-0"]').eq(0).find('a').text()
@@ -21,30 +22,55 @@ const scrapeDetails = async (fastify, options) => {
         }
         let poster = $('div.col-sm-4.film-cover.cover').find('a.block').find('img').attr('src')
         let rating = $('div.box.deep-orange').text()
-        let country = $('ul.list.m-b-0').find('li').eq(1).text().split(':')[1].trim()
-        let total_ep = $('ul.list.m-b-0').find('li').eq(2).text().split(':')[1].trim()
-        let air_date = $('ul.list.m-b-0').find('li').eq(3).text().split(':')[1].trim()
-        let aired_on = $('ul.list.m-b-0').find('li').eq(4).text().split(':')[1].trim()
+
+        // Details
+        let country = $('ul.list.m-b-0').find('li').eq(1).find('b').text()
+        if (country.includes('Country:')) {
+            country = $('ul.list.m-b-0').find('li').eq(1).text().split(':')[1].trim()
+        } else {
+            country = ''
+        }
+
+        let total_ep = $('ul.list.m-b-0').find('li').eq(2).find('b').text()
+        if (total_ep.includes('Episodes:')) {
+            total_ep = $('ul.list.m-b-0').find('li').eq(2).text().split(':')[1].trim()
+        } else {
+            total_ep = ''
+        }
+
+        let air_date = $('ul.list.m-b-0').find('li').eq(3).find('b').text()
+        if (air_date.includes('Aired:') || air_date.includes('Airs:')) {
+            air_date = $('ul.list.m-b-0').find('li').eq(3).text().split(':')[1].trim()
+        } else {
+            air_date = ''
+        }
+
+        let aired_on = $('ul.list.m-b-0').find('li').eq(4).find('b').text()
+        if (aired_on.includes('Aired On:') || aired_on.includes('Airs On:')) {
+            aired_on = $('ul.list.m-b-0').find('li').eq(4).text().split(':')[1].trim()
+        } else {
+            aired_on = ''
+        }
 
         let original_network = $('ul.list.m-b-0').find('li').eq(5).find('b').text()
-        if (!original_network.includes('Original Network:')) {
-            original_network = ''
-        } else {
+        if (original_network.includes('Original Network:')) {
             original_network = $('ul.list.m-b-0').find('li').eq(5).text().split(':')[1].trim()
+        } else {
+            original_network = ''
         }
 
         let duration = $('ul.list.m-b-0').find('li').eq(6).find('b').text() 
-        if (!duration.includes('Duration:')) {
-            duration = ''
-        } else {
+        if (duration.includes('Duration:')) {
             duration = $('ul.list.m-b-0').find('li').eq(6).text().split(':')[1].trim()
+        } else {
+            duration = ''
         }
 
         let content_rating = $('ul.list.m-b-0').find('li').eq(7).find('b').text() 
-        if (!content_rating.includes('Content Rating:')) {
-            content_rating = ''
-        } else {
+        if (content_rating.includes('Content Rating:')) {
             content_rating = $('ul.list.m-b-0').find('li').eq(7).text().split(':')[1].trim()
+        } else {
+            content_rating = ''
         }
         
         // Alternate Title
@@ -79,7 +105,15 @@ const scrapeDetails = async (fastify, options) => {
 
         // Cast
         $('ul.list.no-border.p-b.credits').find('li').each((index, element) => {
-            let cast_name = $(element).find('a < img').attr('src')
+            let cast_name = $(element).find('div.col-xs-8.col-sm-7.p-a-0').find('a').attr('title')
+            let character_name = $(element).find('div.text-ellipsis').find('small').text()
+            // let cast_image = $(element).find('div.col-xs-4.col-sm-5.p-r.p-l-0.credits-left').find('a').find('img').attr('src') //doesn't work because of lazy load
+            let role_type = $(element).find('small.text-muted').text()
+            cast.push({
+                cast_name,
+                character_name,
+                role_type
+            })
         })
 
         let data = {
@@ -99,7 +133,8 @@ const scrapeDetails = async (fastify, options) => {
                 original_network,
                 duration,
                 content_rating
-            }
+            },
+            cast
         }
 
         return { result: data }
